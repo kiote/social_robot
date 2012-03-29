@@ -472,7 +472,6 @@ module Vkontakte
 
     #Save some file to loot folder
     def save(url,folder,filename,with_mechanize = false)
-      folder = folder.gsub(/[\\\:\"\*\?\<\>\|]+/,'').gsub("\s","_")
       path = File.join(Vkontakte::loot_directory,folder)
       Dir::mkdir(path) unless File.exists?(path) && File.directory?(path)
       progress "Downloading " + url
@@ -2339,7 +2338,7 @@ module Vkontakte
 
     def download
       return false unless @connect.login
-      res = @connect.save(@link,"images/#{@album.name}","#{id}.jpg")
+      res = @connect.save(@link,"#{@album.name}","#{id}.jpg")
       progress :image_downloaded,res,self
     end
 
