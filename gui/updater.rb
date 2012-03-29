@@ -3,7 +3,7 @@ require 'mechanize'
 class Updater
 	def last_version
 		return @last_version if @last_version
-		@last_version = Mechanize.new.get("https://raw.github.com/kdkdkd/social_robot/master/version.txt").body
+		@last_version = Mechanize.new.get("https://raw.github.com/kiote/social_robot/master/version.txt").body
     
 		@last_version
 	end
@@ -22,13 +22,13 @@ class Updater
 		Dir::mkdir(new_dir)
 		current_zip = File.join(new_dir,"current.zip")
 		#download
-		Mechanize.new.get("https://github.com/kdkdkd/social_robot/zipball/master").save(current_zip)
+		Mechanize.new.get("https://github.com/kiote/social_robot/zipball/master").save(current_zip)
 		rf = File.expand_path("../../")
 		#extract
 		 Zip::ZipFile.open(File.expand_path(current_zip)) { |zip_file|
 			zip_file.each{|f|
 					f_path = File.join(new_dir, f.name)
-					f_path.gsub!(/[\\\/]kdkdkd[^\\\/]*/,"")
+					f_path.gsub!(/[\\\/]kiote[^\\\/]*/,"")
 					puts f_path
 					FileUtils.mkdir_p(File.dirname(f_path))
 					zip_file.extract(f, f_path)
