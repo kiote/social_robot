@@ -2065,6 +2065,13 @@ module Vkontakte
       self
     end
 
+    class << self
+      # возвращает пути к списку альбомов из файла
+      def get_from_file
+        File.readlines("../../settings/albums.txt")
+      end
+    end
+
     def to_s
       "#{name}(#{@id})"
     end
@@ -2331,7 +2338,7 @@ module Vkontakte
 
     def download
       return false unless @connect.login
-      res = @connect.save(@link,"images","#{id}_#{@album.name}.jpg")
+      res = @connect.save(@link,"images/#{@album.name}","#{id}.jpg")
       progress :image_downloaded,res,self
     end
 
