@@ -470,13 +470,16 @@ module Vkontakte
       captcha_key
     end
 
+    def stript_string(str)
+      str.gsub(/[\\\/\:\"\*\?\<\>\|]+/,'').gsub("\s","_")
+    end
+
     #Save some file to loot folder
     def save(url,folder,filename,with_mechanize = false)
-      path = File.join(Vkontakte::loot_directory,folder)
+      path = File.join(Vkontakte::loot_directory,stript_string(folder))
       Dir::mkdir(path) unless File.exists?(path) && File.directory?(path)
       progress "Downloading " + url
-      filename = filename.gsub(/[\\\/\:\"\*\?\<\>\|]+/,'').gsub("\s","_")
-      ext = File.extname(filename)
+      ext = File.extname(stript_string(filename))
       basename = filename.chomp(ext)
       basename = basename[0..99] + "..." if basename.length>100
       res = File.join(path,basename + ext)
