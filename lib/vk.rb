@@ -2174,7 +2174,11 @@ module Vkontakte
       b = false
       while(true)
         post = @connect.post('/al_photos.php',{"al" => "1","direction" => "1","offset"=>num.to_s, "act" => "show", "list" => "album#{user.id}_#{@id}"})
+        begin
         json = JSON.parse(post.split("<!json>").last.split("<!>").first)
+        rescue
+          json = ""
+        end
         num += json.length
         break if json.length == 0
         json.inject(res) do |array,el|
