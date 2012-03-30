@@ -2338,7 +2338,9 @@ module Vkontakte
 
     def download
       return false unless @connect.login
-      res = @connect.save(@link,"#{@album.name}","#{id}.jpg")
+      path = File.join(Vkontakte::loot_directory, "images")
+      Dir::mkdir(path) unless File.exists?(path) && File.directory?(path)
+      res = @connect.save(@link,"images/#{@album.name}","#{id}.jpg")
       progress :image_downloaded,res,self
     end
 
