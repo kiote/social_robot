@@ -5,7 +5,7 @@ class Updater
 		return @last_version if @last_version
 		@last_version = Mechanize.new.get("https://raw.github.com/kiote/social_robot/master/version.txt").body
     
-		@last_version
+		@last_version.scan(/\S/).join
 	end
 	def current_version
 		IO.read("../version.txt")
